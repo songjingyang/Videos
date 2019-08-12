@@ -76,12 +76,13 @@ vscode
 
 ### 其他
 
-- [原型](https://org.modao.cc/app/50f9d0e3805ffd0c27c993f8230e49bf#screen=sE99370696C1548670743652)
+- [原型](http://www.mtdyw.co/admin_2018) 
+- 账号：admin8
+- 密码 ：admin88
 - [ui](https://pro.modao.cc/app/d7334f4efc86cf137ea25ff9ef78c871c86c83b5?#screen=sa6e15ba8f3153545227700)
 - [ui蓝湖切图用这个](https://lanhuapp.com/web/#/item/board?pid=4c7bcfce-de35-4bd3-aec3-a4c8239e33b7)
 - [接口文档](http://223.203.221.87:8088/zchat-srv/docs)
-
-
+- http://www.mtdyw.co/ web端播放器网站
 
 =======
  项目备注
@@ -93,3 +94,4 @@ parmas.ts = Date.parse(new Date().toString())
     "postbuild": "react-snap",
 
 在使用 initialValue 设置默认值时  如果设置的是为空 但是 select对应的是number的话  那么会出现设置placehoder不生效的情况
+
