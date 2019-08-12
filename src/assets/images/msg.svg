@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>msg_on</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="375" height="81"></rect>
+        <filter x="-0.1%" y="-0.6%" width="100.3%" height="101.2%" filterUnits="objectBoundingBox" id="filter-2">
+            <feOffset dx="0" dy="-1" in="SourceAlpha" result="shadowOffsetInner1"></feOffset>
+            <feComposite in="shadowOffsetInner1" in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowInnerInner1"></feComposite>
+            <feColorMatrix values="0 0 0 0 0.953390731   0 0 0 0 0.953390731   0 0 0 0 0.953390731  0 0 0 1 0" type="matrix" in="shadowInnerInner1"></feColorMatrix>
+        </filter>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="聊天-copy-2" transform="translate(-269.000000, -83.000000)">
+            <rect fill="#F9F9F9" x="0" y="0" width="375" height="667"></rect>
+            <g id="第一组" transform="translate(0.000000, 64.000000)">
+                <g id="Rectangle">
+                    <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
+                    <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
+                </g>
+            </g>
+            <g id="分组-2" transform="translate(253.000000, 64.000000)" fill="#454545" fill-rule="nonzero">
+                <path d="M3,3.74339896 L93.8350034,3.74158896 C94.6390429,3.74157294 95.4094251,3.41880533 95.9733503,2.84568416 L97.8918442,0.895905416 C99.0539038,-0.285104016 100.953337,-0.300465816 102.134346,0.861593875 C102.139011,0.866183683 102.14366,0.870788742 102.148295,0.875408978 L104.125814,2.84683414 C104.686372,3.40566458 105.445067,3.72031662 106.236592,3.72223371 L112.007266,3.73621031 C113.661279,3.74021634 115,5.08218411 115,6.73620152 L115,81.7434587 C115,83.400313 113.656854,84.7434587 112,84.7434587 L3,84.7434587 C1.34314575,84.7434587 -1.13483932e-13,83.400313 -1.13686838e-13,81.7434587 L5.97792683e-05,6.74345874 C5.97792683e-05,5.08662783 1.3431691,3.74349175 3,3.74345874 Z" id="矩形-copy-2"></path>
+            </g>
+            <g id="msg_on" transform="translate(269.000000, 83.000000)" fill="#FFFFFF" fill-rule="nonzero">
+                <path d="M10,3 C6.13793103,3 3,5.75172414 3,9.13103448 C3,11.062069 4.03793104,12.7758621 5.63103448,13.9103448 L5.63103448,17 L8.69655172,15.1413793 C9.13103448,15.2137931 9.56551724,15.262069 10,15.262069 C13.862069,15.262069 17,12.5103448 17,9.13103448 C17,5.75172414 13.862069,3 10,3 Z" id="形状"></path>
+            </g>
+        </g>
+    </g>
+</svg>
