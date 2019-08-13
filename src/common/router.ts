@@ -2,12 +2,44 @@ import Login from '../modules/User/Login';
 import MessageList from '../modules/MessageManage/MessageList'
 import CommentList  from '../modules/CommentManage/CommentList'
 import ChatList from '../modules/ChatManage/ChatRecord'
+import WebsiteOverview from '../modules/ManageMenu/WebsiteOverview';
+import WebsiteStatistics from '../modules/ManageMenu/WebsiteStatistics';
+import OnlineStatistics from '../modules/ManageMenu/OnlineStatistics';
+import VisitStatistics from '../modules/ManageMenu/VisitStatistics';
 const routerData: any[] = [
   {
     path: '/user/login',
     component: Login,
     meta: {
       title: '登录',
+    },
+  },
+  {
+    path: '/menu/home',
+    component: WebsiteOverview,
+    meta: {
+      title: '网站概览',
+    },
+  },
+  {
+    path: '/menu/translate',
+    component: WebsiteStatistics,
+    meta: {
+      title: '网站统计',
+    },
+  },
+  {
+    path: '/menu/visit',
+    component: VisitStatistics,
+    meta: {
+      title: '访问统计',
+    },
+  },
+  {
+    path: '/menu/online',
+    component: OnlineStatistics,
+    meta: {
+      title: '在线统计',
     },
   },
   {

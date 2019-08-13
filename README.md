@@ -93,5 +93,5 @@ parmas.ts = Date.parse(new Date().toString())
 
     "postbuild": "react-snap",
 
-在使用 initialValue 设置默认值时  如果设置的是为空 但是 select对应的是number的话  那么会出现设置placehoder不生效的情况
+在使用 initialValue 设置默认值时  如果设置的是为空 但是 select对应的是number的话  那么会出现设置placehoder不生效的情况 要定义initialvalue为underfined
 

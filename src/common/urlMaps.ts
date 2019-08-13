@@ -3,6 +3,11 @@ const urlMaps: { [key: string]: string } = {
   logout: '/api/admin/logout',
   upload  : '/api/common/upload',
 
+  getMenuPage :"/api",//网站概览
+  getWebSitePage:"/api",//网站统计
+  getOnlinePage :"/api",//在线统计
+  getVisitPage :"/api",//"访问统计"
+  DeleteVisit:"/api",
   getMessagePage : "/api",//留言列表
   DeleteRecord : "/api", //删除留言
   getCommentPage : "/api",

@@ -20,7 +20,7 @@ const menuData = [
       },
       {
         name: '访问统计',
-        path: 'visit ',
+        path: 'visit',
       }
     ]
   },
