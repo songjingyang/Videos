@@ -11,6 +11,11 @@ const urlMaps: { [key: string]: string } = {
   getSystemPage : "/api",//基础设置
   saveSystemSetting:"/api",//保存设置
   getAccountPage :"/api",
+
+  getExtensionPage :"/api",//推广管理
+  DeleteInfo :"/api",//推广删除
+  getExtensionRecord :"/api",//推广记录
+  DeleteExtensionRecord :"/api",//推广记录删除
   CreateAdmin :"/api",
   getAuditPage:"/api",//提现审核
   getOrderPage :"/api",//订单列表

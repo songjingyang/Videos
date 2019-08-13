@@ -10,6 +10,8 @@ import BasicSettings from '../modules/System/BasicSettings';
 import ManagementAccount from '../modules/System/ManagementAccount';
 import OrderList from '../modules/Order/OrderList';
 import AuditWithdrawal from '../modules/Order/AuditWithdrawal';
+import ExtensionPage from '../modules/ExtensionManage/ExtensionManage';
+import ExtensionRecord from '../modules/ExtensionManage/ExtensionRecord';
 const routerData: any[] = [
   {
     path: '/user/login',
@@ -74,6 +76,21 @@ const routerData: any[] = [
     component: AuditWithdrawal,
     meta: {
       title: '审核提现',
+    },
+  },
+  
+  {
+    path: '/extension/home',
+    component: ExtensionPage,
+    meta: {
+      title: '推广管理',
+    },
+  },
+  {
+    path: '/extension/record',
+    component: ExtensionRecord,
+    meta: {
+      title: '推广管理',
     },
   },
   {

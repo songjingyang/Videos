@@ -154,7 +154,7 @@ const menuData = [
     ]
   },
   {
-    name: "广告管理",
+    name: "代理管理",
     icon: "apartment",
     path: "/agent",
     children: [
