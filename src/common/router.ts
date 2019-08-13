@@ -6,6 +6,10 @@ import WebsiteOverview from '../modules/ManageMenu/WebsiteOverview';
 import WebsiteStatistics from '../modules/ManageMenu/WebsiteStatistics';
 import OnlineStatistics from '../modules/ManageMenu/OnlineStatistics';
 import VisitStatistics from '../modules/ManageMenu/VisitStatistics';
+import BasicSettings from '../modules/System/BasicSettings';
+import ManagementAccount from '../modules/System/ManagementAccount';
+import OrderList from '../modules/Order/OrderList';
+import AuditWithdrawal from '../modules/Order/AuditWithdrawal';
 const routerData: any[] = [
   {
     path: '/user/login',
@@ -40,6 +44,36 @@ const routerData: any[] = [
     component: OnlineStatistics,
     meta: {
       title: '在线统计',
+    },
+  },
+  {
+    path: '/system/home',
+    component: BasicSettings,
+    meta: {
+      title: '基础设置',
+    },
+  },
+
+
+  {
+    path: '/system/account',
+    component: ManagementAccount,
+    meta: {
+      title: '管理账户',
+    },
+  },
+  {
+    path: '/order/home',
+    component: OrderList,
+    meta: {
+      title: '订单列表',
+    },
+  },
+  {
+    path: '/order/audit',
+    component: AuditWithdrawal,
+    meta: {
+      title: '审核提现',
     },
   },
   {

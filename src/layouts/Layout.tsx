@@ -22,7 +22,7 @@ export default class Layout extends React.Component<Props, State> {
     const userInfo = this.props.user.userInfo
     const isLogin = !!userInfo.name || !!localStorage.getItem("user_cloud");
     return isLogin ? (
-      <BasicLayout {...this.props}>
+      <BasicLayout {...this.props} >
         {routerData.filter(item => item.path !== '/user/login').map(item => (
           <Route key={item.path} path={item.path} component={item.component} />
         ))}
@@ -30,7 +30,7 @@ export default class Layout extends React.Component<Props, State> {
         <Redirect to={{ pathname: '/menu/home' }} />
       </BasicLayout>
     ) : (
-      <UserLayout {...this.props}>
+      <UserLayout {...this.props} >
           <Route path="/user/login" component={Login} />
           {/* {routerData.map(item => (
             <Route key={item.path} path={item.path} component={item.component} />

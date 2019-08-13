@@ -137,50 +137,50 @@ export default class MessageList extends React.Component<Props, State> {
 
     getMessagePage = (params: any = {}) => {
         this.props.form.validateFields((err, values) => {
-          if (!err) {
-            let payload = {
-              ...values,
-            };
-            if (!params.page) {
-              params.page = 1;
-            }
-            if (params.page === 1) {
-              params.ts = new Date().valueOf();
-            } else {
-              params.ts = this.props.message.messagePage.ts;
-            }
-            if (!params.pageSize) {
-              params.pageSize = 20;
-            }
-            if (payload.timeRange) {
-              if (payload.timeRange.length !== 0) {
-                payload.start_at = parseInt(payload.timeRange[0].valueOf());
-                payload.end_at = parseInt(payload.timeRange[1].valueOf());
-              } else {
-                payload.start_at = 0;
-                payload.end_at = 0;
-              }
-            }
-            payload = {
-              ...payload,
-              ...params,
-            };
-            this.props.message.getMessagePage({
-              data: {
-                ...payload,
-              },
-
-              callback: res => {
-                if (res.code === 200) {
-                  this.setState({
-                    loading: false
-                  })
+            if (!err) {
+                let payload = {
+                    ...values,
+                };
+                if (!params.page) {
+                    params.page = 1;
                 }
-              },
-            });
-          } else {
-            console.log('saveBuyManagementInfo parameters error');
-          }
+                if (params.page === 1) {
+                    params.ts = new Date().valueOf();
+                } else {
+                    params.ts = this.props.message.messagePage.ts;
+                }
+                if (!params.pageSize) {
+                    params.pageSize = 20;
+                }
+                if (payload.timeRange) {
+                    if (payload.timeRange.length !== 0) {
+                        payload.start_at = parseInt(payload.timeRange[0].valueOf());
+                        payload.end_at = parseInt(payload.timeRange[1].valueOf());
+                    } else {
+                        payload.start_at = 0;
+                        payload.end_at = 0;
+                    }
+                }
+                payload = {
+                    ...payload,
+                    ...params,
+                };
+                this.props.message.getMessagePage({
+                    data: {
+                        ...payload,
+                    },
+
+                    callback: res => {
+                        if (res.code === 200) {
+                            this.setState({
+                                loading: false
+                            })
+                        }
+                    },
+                });
+            } else {
+                console.log('saveBuyManagementInfo parameters error');
+            }
         });
     };
     //分页
@@ -261,7 +261,7 @@ export default class MessageList extends React.Component<Props, State> {
                         </Row>
                     </Form>
                     <Col span={24}>
-                    <div style={{ marginBottom: 16 }}>
+                        <div style={{ marginBottom: 16 }}>
                             <Button
                                 type="primary"
                                 // onClick={this.AllDelete}
@@ -289,7 +289,7 @@ export default class MessageList extends React.Component<Props, State> {
                             rowSelection={rowSelection}
                             onChange={this.handleTableChange}
                         />
-                      
+
                     </Col>
                 </div>
             </Card>

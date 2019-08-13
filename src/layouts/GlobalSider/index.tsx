@@ -34,6 +34,12 @@ class GlobalSider extends React.Component<Props, State> {
     return (
       <Sider
         trigger={null}
+        style={{
+          overflow: 'auto',
+          height: '100vh',
+          position: 'fixed',
+          left: 0,
+        }}
         collapsible
         collapsed={collapsed}
         breakpoint="lg"
