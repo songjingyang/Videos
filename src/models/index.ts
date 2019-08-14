@@ -6,6 +6,7 @@ import {Menu} from './Menu';
 import {System} from "./System";
 import {Order} from "./Order";
 import {Extension} from './Extension'
+import {Member} from './Member'
 export default {
   user: new User(),
   message :new Message(),
@@ -14,5 +15,6 @@ export default {
   menu : new Menu(),
   system : new System(),
   order :new Order(),
-  extension : new Extension()
+  extension : new Extension(),
+  member : new Member()
 };

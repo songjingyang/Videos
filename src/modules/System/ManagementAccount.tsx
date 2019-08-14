@@ -241,7 +241,7 @@ export default class ManagementAccount extends React.Component<Props, State> {
                             className="listsearch"
                             onClick={this.CreateAdmin}
                         >
-                            上传广告
+                            添加管理员
                          </Button>
                     </Col>
                     <Col span={24}>
