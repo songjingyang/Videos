@@ -26,7 +26,7 @@ import {
   RcBaseFormProps,
 } from 'antd/lib/form/Form';
 import urlMaps from '../../common/urlMaps'
-import UploadImg from './../../components/UploadImg'
+import UploadImg from '../../components/UploadImg'
 import { inject, observer } from 'mobx-react';
 import { withRouter } from 'react-router';
 import PreviewImg from '../../components/PreviewImg';
@@ -49,7 +49,7 @@ interface State {
   status: boolean;
   fileList: any;
 }
-@inject('system')
+@inject('member')
 @observer
 export default class CreateMember extends React.Component<Props, State> {
   constructor(props: Props) {

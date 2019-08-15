@@ -11,12 +11,34 @@ const urlMaps: { [key: string]: string } = {
   getSystemPage: "/api",//基础设置
   saveSystemSetting: "/api",//保存设置
   getAccountPage: "/api",
+  getNavPage:"/api",//navpage
+  CreateNav :"/api",
+  getCategoryPage:"/api",
+  CreateCategory:"/api",
+  DeleteCategory:"/api",
+  getMitoPage :"/api",
+  DeleteMito:"/api",
+  CreateMito:"/api",
+  getTagPage :"/api",
+  DeleteTag:"/api",
+  CreateTag :"/api",
+
+  getVideoPage :"/api",
+  DeleteVideo:"/api",
+  CreateVideo :"/api",
 
   getExtensionPage: "/api",//推广管理
   DeleteInfo: "/api",//推广删除
   getExtensionRecord: "/api",//推广记录
   DeleteExtensionRecord: "/api",//推广记录删除
   CreateAdmin: "/api",
+  getAdvertSpacePage: "/api",//广告位列表
+  EditAdvertSpace: "/api",//添加编辑广告位
+  DeleteAdvertSpace: "/api",//删除广告位
+
+  getAdvertPage: "/api",//广告列表
+  EditAdvert: "/api",//添加编辑广告
+  DeleteAdvert: "/api",//删除广告
 
   getMemberPage: "/api",//会员列表
   EditMember: "/api",//添加编辑会员

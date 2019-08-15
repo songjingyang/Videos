@@ -29,67 +29,67 @@ const menuData = [
     icon: "setting",
     path: "/system",
     children: [
-      {
-        name: '基础设置',
-        path: 'home',
-      },
-      {
-        name: '会员设置',
-        path: 'vip',
-      },
-      {
-        name: '管理账户',
-        path: 'account',
-      },
+      // {
+      //   name: '基础设置',
+      //   path: 'home',
+      // },
+      // {
+      //   name: '会员设置',
+      //   path: 'vip',
+      // },
+      // {
+      //   name: '管理账户',
+      //   path: 'account',
+      // },
       {
         name: '导航设置',
-        path: 'nav ',
+        path: 'nav',
       },
-      {
-        name: '支付设置',
-        path: 'pay ',
-      },
+      // {
+      //   name: '支付设置',
+      //   path: 'pay ',
+      // },
       {
         name: '分类编辑',
         path: 'classification',
       },
       {
         name: '美图分类',
-        path: 'Mito ',
+        path: 'Mito',
       },
       {
         name: '标签编辑',
-        path: 'tag ',
+        path: 'tag',
       },
       {
         name: '热词编辑',
-        path: 'HotWords ',
+        path: 'HotWords',
       },
-      {
-        name: '虚拟形象',
-        path: 'VirtualImage',
-      },
-      {
-        name: '幻灯设置',
-        path: 'SlideProjector ',
-      },
+      // {
+      //   name: '虚拟形象',
+      //   path: 'VirtualImage',
+      // },
+      // {
+      //   name: '幻灯设置',
+      //   path: 'SlideProjector ',
+      // },
     ]
   },
-  {
-    name: "订单管理",
-    icon: "ordered-list",
-    path: "/order",
-    children: [
-      {
-        name: '订单列表',
-        path: 'home',
-      },
-      {
-        name: '审核提现',
-        path: 'audit',
-      },
-    ]
-  },
+  // {
+  //   name: "订单管理",
+  //   icon: "ordered-list",
+  //   path: "/order",
+  //   children: [
+  //     {
+  //       name: '订单列表',
+  //       path: 'home',
+  //     },
+  //     {
+  //       name: '审核提现',
+  //       path: 'audit',
+  //     },
+  //   ]
+  // },
   {
     name: "会员管理",
     icon: "user",
@@ -110,10 +110,10 @@ const menuData = [
         name: '视频管理',
         path: 'home',
       },
-      {
-        name: '秀场管理',
-        path: 'show',
-      },
+      // {
+      //   name: '秀场管理',
+      //   path: 'show',
+      // },
     ]
   },
   {
@@ -123,17 +123,6 @@ const menuData = [
     children: [
       {
         name: '图库列表',
-        path: 'home',
-      },
-    ]
-  },
-  {
-    name: "数据采集",
-    icon: "database",
-    path: "/database",
-    children: [
-      {
-        name: '直播采集',
         path: 'home',
       },
     ]
@@ -153,25 +142,25 @@ const menuData = [
       },
     ]
   },
-  {
-    name: "代理管理",
-    icon: "apartment",
-    path: "/agent",
-    children: [
-      {
-        name: '代理成员',
-        path: 'home',
-      },
-      {
-        name: '财务记录',
-        path: 'finance',
-      },
-      {
-        name: '分成记录',
-        path: 'divide ',
-      },
-    ]
-  },
+  // {
+  //   name: "代理管理",
+  //   icon: "apartment",
+  //   path: "/agent",
+  //   children: [
+  //     {
+  //       name: '代理成员',
+  //       path: 'home',
+  //     },
+  //     {
+  //       name: '财务记录',
+  //       path: 'finance',
+  //     },
+  //     {
+  //       name: '分成记录',
+  //       path: 'divide ',
+  //     },
+  //   ]
+  // },
   {
     name: "推广管理",
     icon: "share-alt",
