@@ -54,7 +54,8 @@ interface State {
     pagination: any;
     selectedRowKeys: any;
     selectedRows: any,
-    loading: boolean
+    loading: boolean,
+    imgType: any
 }
 @Form.create()
 @inject('mito')
@@ -64,6 +65,10 @@ export default class MitoList extends React.Component<Props, State> {
         super(props);
         this.state = {
             visible: false,
+            imgType: {
+                0: "普通视频",
+                1: "VIP视频"
+            },
             loading: true,
             currItem: {},
             selectedRowKeys: [],
@@ -76,46 +81,51 @@ export default class MitoList extends React.Component<Props, State> {
             columns: [
                 {
                     title: '缩略图',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
-                    render :(record:any,text:any)=>(
-                        <PreviewImg alt="img" src={"https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1925692732,4159306238&fm=26&gp=0.jpg"}/>
+                    dataIndex: 'cover',
+                    key: 'cover',
+                    render: (record: any, text: any) => (
+                        <PreviewImg alt="img" src={text} />
                     )
                 },
                 {
                     title: '图片名称',
-                    dataIndex: 'type',
-                    key: 'type',
+                    dataIndex: 'title',
+                    key: 'title',
                 },
                 {
                     title: '所属类型',
-                    dataIndex: 'money1',
-                    key: 'money1',
+                    dataIndex: 'vip',
+                    key: 'vip',
+                    render: (record: any, text: number) => (
+                        <span>
+                            {this.state.imgType[record.vip]}
+                        </span>
+                    )
                 },
                 {
                     title: '浏览次数',
-                    dataIndex: 'money2',
-                    key: 'money2',
+                    dataIndex: 'playCount',
+                    key: 'playCount',
                 },
                 {
                     title: '喜欢人数',
-                    dataIndex: 'money3',
-                    key: 'money3',
+                    dataIndex: 'like',
+                    key: 'like',
                 },
                 {
                     title: '收藏人数',
-                    dataIndex: 'email',
-                    key: 'email',
+                    dataIndex: 'star',
+                    key: 'star',
                 },
                 {
                     title: '图片张数',
-                    dataIndex: 'email',
-                    key: 'email',
+                    dataIndex: 'imgTotal',
+                    key: 'imgTotal',
                 },
                 {
                     title: '添加时间',
-                    dataIndex: 'created_at',
-                    key: 'created_at',
+                    dataIndex: 'createdAt',
+                    key: 'createdAt',
                     render: (text: string, record: any) => (
                         <span>
                             {dateFormater(text)}
@@ -128,16 +138,14 @@ export default class MitoList extends React.Component<Props, State> {
                     key: 'play',
                     render: (text: string, record: any) => (
                         <span>
-                            <a href="#"   onClick={() => this.CreateMito(record)}>编辑</a>
+                            <a href="#" onClick={() => this.CreateMito(record)}>编辑</a>
                             <Divider type="vertical" />
                             <Popconfirm
                                 title="你确定删除吗？"
                                 icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
                                 okText="确认"
-
-
                                 cancelText="取消"
-                                onConfirm={this.DeleteRecord} >
+                                onConfirm={() => this.DeleteRecord(record)} >
                                 <a href="#">删除</a>
                             </Popconfirm>
                         </span>
@@ -149,8 +157,22 @@ export default class MitoList extends React.Component<Props, State> {
     componentDidMount() {
         this.getMitoList();
     }
-    DeleteRecord = (e: any) => {
-
+    DeleteRecord = (record: any) => {
+        this.props.mito.DeleteMito({
+            data: {
+                id: record.id?record.id:this.state.selectedRows.map((item:any,index:number)=>{
+                    return item.id
+                })
+            },
+            callback :(res)=>{
+                if(res.code===200){
+                    message.success(res.msg||"操作成功")
+                    this.getMitoList();
+                }else{
+                    message.error(res.msg||"操作失败") 
+                }
+            }
+        })
     }
     onSelectChange = (selectedRowKeys: any, selectedRows: any) => {
         console.log('selectedRowKeys changed: ', selectedRowKeys, selectedRows);
@@ -229,20 +251,20 @@ export default class MitoList extends React.Component<Props, State> {
     };
     isCreateMito = (bool: boolean) => {
         this.setState({
-          visible: bool,
+            visible: bool,
         });
-      };
-      CreateMito = (item: any) => {
+    };
+    CreateMito = (item: any) => {
         this.isCreateMito(true);
         this.setState({
-          currItem: item,
+            currItem: item,
         })
-      };
-      PropsInfo = (bool: boolean) => {
+    };
+    PropsInfo = (bool: boolean) => {
         this.isCreateMito(false);
-      };
+    };
     render() {
-        // const info = this.props.MessageMana.MitoList;
+        const info = this.props.mito.mitoPage;
         const { selectedRowKeys, selectedRows } = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -258,7 +280,7 @@ export default class MitoList extends React.Component<Props, State> {
             <Card title="美图管理" bordered={false}
             // loading={this.state.loading}
             >
-                 {this.state.visible && (
+                {this.state.visible && (
                     <Modal
                         visible={this.state.visible}
                         width={700}
@@ -266,20 +288,20 @@ export default class MitoList extends React.Component<Props, State> {
                         footer={null}
                     >
                         <CreateMito
-                        form={this.props.form}
-                        mito={this.props.mito}
-                        data={this.state.currItem}
-                        onClose={() => {
-                            this.PropsInfo(false);
-                            this.getMitoList({
-                            pageSize: this.state.pagination.pageSize,
-                            page: this.state.pagination.current,
-                            });
-                        }}
+                            form={this.props.form}
+                            mito={this.props.mito}
+                            data={this.state.currItem}
+                            onClose={() => {
+                                this.PropsInfo(false);
+                                this.getMitoList({
+                                    pageSize: this.state.pagination.pageSize,
+                                    page: this.state.pagination.current,
+                                });
+                            }}
                         />
                     </Modal>
-                    )}
-                            <BackTop className="ant-back-top-inner" />
+                )}
+                <BackTop className="ant-back-top-inner" />
                 <div className="tableList">
                     <Form onSubmit={this.handleSubmit}>
                         <Row
@@ -304,9 +326,9 @@ export default class MitoList extends React.Component<Props, State> {
                                     className="form-inline-item"
                                 >
                                     {getFieldDecorator('atat')(
-                                          <Select defaultValue="lucy" style={{ width: 200 }} placeholder = "请选择分类">
-                                          <Option value={0}>日本美女</Option>
-                                          <Option value={1}>韩国美女</Option>
+                                        <Select defaultValue="lucy" style={{ width: 200 }} placeholder="请选择分类">
+                                            <Option value={0}>日本美女</Option>
+                                            <Option value={1}>韩国美女</Option>
                                         </Select>
                                     )}
                                 </FormItem>
@@ -315,7 +337,7 @@ export default class MitoList extends React.Component<Props, State> {
                                 xl={4}
                                 md={24}
                                 sm={24}
-                            
+
                                 style={{ marginBottom: '10px' }}
                             >
                                 <div className="submitButtons">
@@ -338,21 +360,21 @@ export default class MitoList extends React.Component<Props, State> {
                         style={{ marginBottom: '10px' }}
                     >
                         <Button
-                        type="primary"
-                        htmlType="submit"
-                        className="listsearch"
-                        onClick={this.CreateMito}
+                            type="primary"
+                            htmlType="submit"
+                            className="listsearch"
+                            onClick={this.CreateMito}
                         >
-                        添加资源
+                            添加资源
                         </Button>
                     </Col>
                     <Col span={24}>
-                    <div style={{ marginBottom: 16 }}>
+                        <div style={{ marginBottom: 16 }}>
                             <Button
                                 type="primary"
-                                // onClick={this.AllDelete}
+                                onClick={this.DeleteRecord}
                                 disabled={!hasSelected}
-                            // loading={loading}
+                                // loading={loading}
                             >
                                 一键删除
                             </Button>
@@ -364,14 +386,14 @@ export default class MitoList extends React.Component<Props, State> {
                             columns={this.state.columns}
                             rowKey="id"
                             //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                            dataSource={info.list}
+                            pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage: true
+                            }}
                             rowSelection={rowSelection}
                             onChange={this.handleTableChange}
                         />

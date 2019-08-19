@@ -36,7 +36,7 @@ import { dateFormater, MoneyFormatter } from '../../utils/utils';
 import System from '../../models/System';
 import moment from 'moment';
 import PreviewImg from '../../components/PreviewImg';
-import CreateMito from './CreateMito'
+import CreateCategory from './CreateCategory'
 import { inject, observer } from 'mobx-react';
 const FormItem = Form.Item;
 const Option = Select.Option;
@@ -72,13 +72,18 @@ export default class Mito extends React.Component<Props, State> {
             columns: [
                 {
                     title: '分类编号',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    dataIndex: 'name',
+                    key: 'name',
                 },
                 {
                     title: '分类名称',
-                    dataIndex: 'type',
-                    key: 'type',
+                    dataIndex: 'sort',
+                    key: 'sort',
+                },
+                {
+                    title: '排序',
+                    dataIndex: 'sort',
+                    key: 'sort',
                 },
                 {
                     title: '操作',
@@ -105,12 +110,12 @@ export default class Mito extends React.Component<Props, State> {
         };
     }
     componentDidMount() {
-        this.getMitoList();
+        this.getCategoryEditing();
     }
     DeleteRecord = (e: any) => {
 
     }
-    getMitoList = (params: any = {}) => {
+    getCategoryEditing = (params: any = {}) => {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 let payload = {
@@ -122,7 +127,7 @@ export default class Mito extends React.Component<Props, State> {
                 if (params.page === 1) {
                     params.ts = new Date().valueOf();
                 } else {
-                    params.ts = this.props.system.navPage.ts;
+                    params.ts = this.props.system.categoryPage.ts;
                 }
                 if (!params.pageSize) {
                     params.pageSize = 20;
@@ -140,7 +145,7 @@ export default class Mito extends React.Component<Props, State> {
                     ...payload,
                     ...params,
                 };
-                this.props.system.getMitoPage({
+                this.props.system.getCategoryPage({
                     data: {
                         ...payload,
                     },
@@ -167,7 +172,7 @@ export default class Mito extends React.Component<Props, State> {
         this.setState({
             pagination: pager,
         });
-        this.getMitoList({
+        this.getCategoryEditing({
             pageSize: pagination.pageSize,
             page: pagination.current,
         });
@@ -177,7 +182,7 @@ export default class Mito extends React.Component<Props, State> {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
-                this.getMitoList(values);
+                this.getCategoryEditing(values);
             }
         });
     };
@@ -196,7 +201,7 @@ export default class Mito extends React.Component<Props, State> {
         this.isCreateMito(false);
       };
     render() {
-        // const info = this.props.MessageMana.MitoList;
+        const info = this.props.system.categoryPage;
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: { span: 6 },
@@ -213,13 +218,13 @@ export default class Mito extends React.Component<Props, State> {
                         onCancel={() => this.isCreateMito(false)}
                         footer={null}
                     >
-                        <CreateMito
+                        <CreateCategory
                         form={this.props.form}
                         system={this.props.system}
                         data={this.state.currItem}
                         onClose={() => {
                             this.PropsInfo(false);
-                            this.getMitoList({
+                            this.getCategoryEditing({
                             pageSize: this.state.pagination.pageSize,
                             page: this.state.pagination.current,
                             });
@@ -249,15 +254,14 @@ export default class Mito extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                              dataSource={info.list}
+                              pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage:true
+                              }}
                             onChange={this.handleTableChange}
                         />
 

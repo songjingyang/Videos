@@ -62,37 +62,48 @@ export default class CreateAdvert extends React.Component<Props, State> {
     };
   }
   componentDidMount() {
-    // this.props.data.id && this.props.advert.getDefaultAdvert({
-    //   data: {
-    //     id: this.props.data.id
-    //   }
-    // })
-  }
-  handleSubmit = (e: KeyboardEvent) => {
-    e.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        this.props.advert.CreateAdvert({
-          data: {
-            ...values,
-          },
-          callback: res => {
-            if (res.code === 200) {
-              message.success('保存成功');
-              if (this.props.onClose) {
-                this.props.onClose();
-              }
-            }
-          },
-        });
+    this.props.data.id && this.props.advert.getDefaultAdvert({
+      data: {
+        id: this.props.data.id
       }
-    });
-  };
+    })
+  }
+  ChangeVideo = () => {
+    this.props.form.setFieldsValue({
+      cover_url: ""
+    })
+  }
   getImgUrl = (imgUrl: any) => {
     this.props.form.setFieldsValue({
       cover_url: imgUrl
     })
   }
+  handleSubmit = (e: KeyboardEvent) => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      // if (!err) {
+      //   this.props.advert.addAdvertisement({
+      //     data: {
+      //       ...values,
+      //       start_at: "" + parseInt(values.start_at.valueOf()),
+      //       end_at: "" + parseInt(values.end_at.valueOf()),
+      //       // type: 1,
+      //       id: this.props.data.id
+      //       // url :this.state.url
+      //     },
+      //     callback: res => {
+      //       if (res.code === 200) {
+      //         message.success('保存成功');
+      //         if (this.props.onClose) {
+      //           this.props.onClose();
+      //         }
+      //       }
+      //     },
+      //   });
+      // }
+    });
+  };
+  
   render() {
     const { getFieldDecorator } = this.props.form;
     const formItemLayout = {
@@ -129,54 +140,12 @@ export default class CreateAdvert extends React.Component<Props, State> {
           name: '开屏广告(375*667)',
         },
       ]
-    // const info = this.props.advert.defaultAdvert
+    const info = this.props.advert.defaultAdvert
     let baseUrl = window.location.protocol + '//' + document.domain + ":" + window.location.port + '/api'
     return (
       <Card bordered={false} title={this.props.data.id ? '编辑会员' : '添加会员'} className="Advert">
         <Form onSubmit={this.handleSubmit}>
-          <Row gutter={{ xs: 8, sm: 16, md: 24 }}>
-            <Col xl={24} md={24} sm={24}>
-              <FormItem
-                label="广告名称"
-                {...formItemLayout}
-                className="form-inline-item"
-              >
-                {getFieldDecorator('url', {
-                  rules: [
-                    {
-                      required: true,
-                      // whitespace: true,
-                      message: '请输入广告名称',
-                    },
-                  ],
-                })(
-                  <Input
-                    placeholder="请输入广告名称"
-                  />
-                )}
-              </FormItem>
-            </Col>
-            <Col xl={24} md={24} sm={24}>
-              <FormItem
-                label="显示状态"
-                {...formItemLayout}
-                className="form-inline-item"
-              >
-                {getFieldDecorator('url', {
-                  rules: [
-                    {
-                      required: true,
-                      // whitespace: true,
-                    },
-                  ],
-                })(
-                    <RadioGroup>
-                         <Radio value={1}>正常</Radio>
-                         <Radio value={2}>停止</Radio>
-                    </RadioGroup>
-                )}
-              </FormItem>
-            </Col>
+        <Row gutter={{ xs: 8, sm: 16, md: 24 }}>
             <Col xl={24} md={24} sm={24}>
               <FormItem
                 label="广告位置"
@@ -184,7 +153,7 @@ export default class CreateAdvert extends React.Component<Props, State> {
                 className="form-inline-item"
               >
                 {getFieldDecorator('pos', {
-                  initialValue: "",
+                  initialValue: this.props.data.id ? info.pos : undefined,
                   rules: [
                     {
                       required: true,
@@ -206,12 +175,38 @@ export default class CreateAdvert extends React.Component<Props, State> {
             </Col>
             <Col xl={24} md={24} sm={24}>
               <FormItem
-                label="上传图片"
+                label="广告图片类型"
+                {...formItemLayout}
+                className="form-inline-item"
+              >
+                {getFieldDecorator('type', {
+                  initialValue: this.props.data.id ? info.type : ""
+                  // (this.props.form.getFieldValue("pos")===8?1:"")
+                  ,
+                  rules: [
+                    {
+                      required: true,
+                      message: '请选择广告图片类型',
+                    },
+                  ],
+                })(
+                  <RadioGroup onChange={this.ChangeVideo}>
+                    <Radio value={1}>普通图片</Radio>
+                    <Radio value={2}
+                    // disabled = {this.props.form.getFieldValue("pos")===8 ?true :false}
+                    >Gif图片</Radio>
+                  </RadioGroup>
+                )}
+              </FormItem>
+            </Col>
+            <Col xl={24} md={24} sm={24}>
+              <FormItem
+                label="广告图片"
                 {...formItemLayout}
                 className="form-inline-item"
               >
                 {getFieldDecorator('cover_url', {
-                //   initialValue: this.props.data.id ? info.cover_url : "",
+                  initialValue: this.props.data.id ? info.cover_url : "",
                   rules: [
                     {
                       required: true,
@@ -225,111 +220,112 @@ export default class CreateAdvert extends React.Component<Props, State> {
             </Col>
             <Col xl={24} md={24} sm={24}>
               <FormItem
-                label="外部图片"
+                label="广告名称"
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('title', {
+                  initialValue: this.props.data.id ? info.title : '',
                   rules: [
                     {
                       required: true,
-                      // whitespace: true,
-                      message: '请输入外部图片',
+                      message: '请输入广告名称',
                     },
                   ],
                 })(
                   <Input
-                    placeholder="请输入外部图片"
+                    placeholder="请输入广告名称"
                   />
                 )}
               </FormItem>
             </Col>
             <Col xl={24} md={24} sm={24}>
               <FormItem
-                label="外部链接"
+                label="广告时长（S）"
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('duration', {
+                  initialValue: this.props.data.id ? info.duration : '',
                   rules: [
                     {
                       required: true,
-                      // whitespace: true,
-                      message: '请输入外部链接',
+                      message: '请输入广告时长',
                     },
                   ],
                 })(
                   <Input
-                    placeholder="请输入外部链接"
+                    placeholder="请输入广告时长"
                   />
                 )}
               </FormItem>
             </Col>
             <Col xl={24} md={24} sm={24}>
               <FormItem
-                label="广告类型"
+                label="链接"
                 {...formItemLayout}
                 className="form-inline-item"
               >
                 {getFieldDecorator('url', {
+                  initialValue: this.props.data.id ? info.url : '',
                   rules: [
                     {
                       required: true,
                       // whitespace: true,
-                    },
-                  ],
-                })(
-                    <RadioGroup>
-                         <Radio value={1}>图片广告</Radio>
-                         <Radio value={2}>代码广告</Radio>
-                    </RadioGroup>
-                )}
-              </FormItem>
-            </Col>
-            <Col xl={24} md={24} sm={24}>
-              <FormItem
-                label="图片有效期"
-                {...formItemLayout}
-                className="form-inline-item"
-              >
-                {getFieldDecorator('url', {
-                  rules: [
-                    {
-                      required: true,
-                      // whitespace: true,
-                    },
-                  ],
-                })(
-                    <RangePicker
-                      showTime={{
-                        defaultValue: [
-                          moment('00:00:00', 'HH:mm:ss'),
-                          moment('23:59:59', 'HH:mm:ss'),
-                        ],
-                      }}
-                      format="YYYY-MM-DD HH:mm:ss"
-                      allowClear={true}
-                    />
-                )}
-              </FormItem>
-            </Col>
-            <Col xl={24} md={24} sm={24}>
-              <FormItem
-                label="排序"
-                {...formItemLayout}
-                className="form-inline-item"
-              >
-                {getFieldDecorator('url', {
-                  rules: [
-                    {
-                      required: true,
-                      // whitespace: true,
-                      message: '请输入排序',
+                      message: '请输入链接',
                     },
                   ],
                 })(
                   <Input
-                    placeholder="请输入排序"
+                    placeholder="请输入链接"
+                  />
+                )}
+              </FormItem>
+            </Col>
+            <Col xl={24} md={24} sm={24}>
+              <FormItem
+                label="开始时间"
+                {...formItemLayout}
+                className="form-inline-item"
+              >
+                {getFieldDecorator('start_at', {
+                  initialValue: this.props.data.id ? moment(+info.start_at) : null,
+                  rules: [
+                    {
+                      required: true,
+                      message: '请选择开始时间',
+                    },
+                  ],
+                })(
+                  <DatePicker
+                    showTime={{ defaultValue: moment('00:00:00', 'HH:mm:ss') }}
+                    format="YYYY-MM-DD HH:mm:ss"
+                    allowClear={true}
+                    placeholder="开始时间"
+                  />
+                )}
+              </FormItem>
+            </Col>
+            <Col xl={24} md={24} sm={24}>
+              <FormItem
+                label="结束时间"
+                {...formItemLayout}
+                className="form-inline-item"
+              >
+                {getFieldDecorator('end_at', {
+                  initialValue: this.props.data.id ? moment(Number(info.end_at)) : null,
+                  rules: [
+                    {
+                      required: true,
+                      message: '请选择结束时间',
+                    },
+                  ],
+                })(
+                  <DatePicker
+                    showTime={{ defaultValue: moment('23:59:59', 'HH:mm:ss') }}
+                    format="YYYY-MM-DD HH:mm:ss"
+                    allowClear={true}
+                    placeholder="结束时间"
                   />
                 )}
               </FormItem>

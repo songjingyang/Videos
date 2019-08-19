@@ -70,7 +70,7 @@ export default class CreateCategory extends React.Component<Props, State> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.system.CreateNav({
+        this.props.system.CreateCategory({
           data: {
             ...values,
           },
@@ -93,36 +93,7 @@ export default class CreateCategory extends React.Component<Props, State> {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
-    const list = [
-        // {
-        //   id: 1,
-        //   name: '首页浮窗',
-        // },
-        {
-          id: 2,
-          name: '首页嵌入(375*252)',
-        },
-        {
-          id: 3,
-          name: '首页底部(375*58)',
-        },
-        {
-          id: 4,
-          name: '播放页浮窗(146*95)',
-        },
-        {
-          id: 5,
-          name: '播放页嵌入(375*58)',
-        },
-        // {
-        //   id: 6,
-        //   name: '播放中插入视频',
-        // },
-        {
-          id: 8,
-          name: '开屏广告(375*667)',
-        },
-      ]
+  
     // const info = this.props.advert.defaultAdvert
     let baseUrl = window.location.protocol + '//' + document.domain + ":" + window.location.port + '/api'
     return (
@@ -135,7 +106,8 @@ export default class CreateCategory extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('name', {
+                  initialValue :this.props.data.name,
                   rules: [
                     {
                       required: true,
@@ -145,35 +117,8 @@ export default class CreateCategory extends React.Component<Props, State> {
                   ],
                 })(
                   <Input
-                    placeholder="请输入请输入分类名称账号"
+                    placeholder="请输入分类名称"
                   />
-                )}
-              </FormItem>
-            </Col>
-            <Col xl={24} md={24} sm={24}>
-              <FormItem
-                label="大类选择"
-                {...formItemLayout}
-                className="form-inline-item"
-              >
-                {getFieldDecorator('pos', {
-                //   initialValue: this.props.data.id ? info.pos : undefined,
-                  rules: [
-                    {
-                      required: true,
-                      message: '请选择大类',
-                    },
-                  ],
-                })(
-                  <Select placeholder={"请选择大类"}>
-                    {
-                      list.map((item: any, index: number) => (
-                        <Option value={item.id} key={item.id}
-                        // disabled ={this.props.form.getFieldValue("type")===2&&item.id ===8 ? true :false}
-                        >{item.name}</Option>
-                      ))
-                    }
-                  </Select>
                 )}
               </FormItem>
             </Col>
@@ -183,7 +128,8 @@ export default class CreateCategory extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('sort', {
+                  initialValue :this.props.data.sort,
                   rules: [
                     {
                       required: true,

@@ -52,7 +52,8 @@ interface State {
     visible: boolean;
     currItem: any;
     pagination: any;
-    loading: boolean
+    loading: boolean,
+    vipStatusMaps: any
 }
 @Form.create()
 @inject('member')
@@ -63,6 +64,11 @@ export default class MemberList extends React.Component<Props, State> {
         this.state = {
             visible: false,
             loading: true,
+            vipStatusMaps: {
+                "0": "非会员",
+                "1": "普通会员",
+                "2": "VIP会员"
+            },
             currItem: {},
             pagination: {
                 pageSize: 20,
@@ -72,33 +78,18 @@ export default class MemberList extends React.Component<Props, State> {
             columns: [
                 {
                     title: '推广ID',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    dataIndex: 'spread_id',
+                    key: 'spread_id',
                 },
                 {
                     title: '用户名',
-                    dataIndex: 'type',
-                    key: 'type',
-                },
-                {
-                    title: '签到次数',
-                    dataIndex: 'money1',
-                    key: 'money1',
-                },
-                {
-                    title: '连续签到',
-                    dataIndex: 'money2',
-                    key: 'money2',
-                },
-                {
-                    title: '签到日期',
-                    dataIndex: 'money3',
-                    key: 'money3',
+                    dataIndex: 'name',
+                    key: 'name',
                 },
                 {
                     title: '注册IP',
-                    dataIndex: 'email',
-                    key: 'email',
+                    dataIndex: 'ip',
+                    key: 'ip',
                 },
                 {
                     title: '注册时间',
@@ -111,14 +102,14 @@ export default class MemberList extends React.Component<Props, State> {
                     )
                 },
                 {
-                    title: '金币',
-                    dataIndex: 'email',
-                    key: 'email',
-                },
-                {
                     title: '会员类型',
-                    dataIndex: 'email',
-                    key: 'email',
+                    dataIndex: 'vip',
+                    key: 'vip',
+                    render: (text: number, record: any) => (
+                        <span>
+                            {this.state.vipStatusMaps[record.vip]}
+                        </span>
+                    )
                 },
                 {
                     title: '操作',
@@ -126,14 +117,12 @@ export default class MemberList extends React.Component<Props, State> {
                     key: 'play',
                     render: (text: string, record: any) => (
                         <span>
-                            <a href="#"   onClick={() => this.CreateMember(record)}>编辑</a>
+                            <a href="#" onClick={() => this.CreateMember(record)}>编辑</a>
                             <Divider type="vertical" />
                             <Popconfirm
                                 title="你确定删除吗？"
                                 icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
                                 okText="确认"
-
-
                                 cancelText="取消"
                                 onConfirm={this.DeleteRecord} >
                                 <a href="#">删除</a>
@@ -223,20 +212,20 @@ export default class MemberList extends React.Component<Props, State> {
     };
     isCreateMember = (bool: boolean) => {
         this.setState({
-          visible: bool,
+            visible: bool,
         });
-      };
-      CreateMember = (item: any) => {
+    };
+    CreateMember = (item: any) => {
         this.isCreateMember(true);
         this.setState({
-          currItem: item,
+            currItem: item,
         })
-      };
-      PropsInfo = (bool: boolean) => {
+    };
+    PropsInfo = (bool: boolean) => {
         this.isCreateMember(false);
-      };
+    };
     render() {
-        // const info = this.props.MessageMana.MemberList;
+        const info = this.props.member.memberPage;
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: { span: 6 },
@@ -246,7 +235,7 @@ export default class MemberList extends React.Component<Props, State> {
             <Card title="会员列表" bordered={false}
             // loading={this.state.loading}
             >
-                 {this.state.visible && (
+                {this.state.visible && (
                     <Modal
                         visible={this.state.visible}
                         width={700}
@@ -254,20 +243,20 @@ export default class MemberList extends React.Component<Props, State> {
                         footer={null}
                     >
                         <CreateMember
-                        form={this.props.form}
-                        member={this.props.member}
-                        data={this.state.currItem}
-                        onClose={() => {
-                            this.PropsInfo(false);
-                            this.getMemberList({
-                            pageSize: this.state.pagination.pageSize,
-                            page: this.state.pagination.current,
-                            });
-                        }}
+                            form={this.props.form}
+                            member={this.props.member}
+                            data={this.state.currItem}
+                            onClose={() => {
+                                this.PropsInfo(false);
+                                this.getMemberList({
+                                    pageSize: this.state.pagination.pageSize,
+                                    page: this.state.pagination.current,
+                                });
+                            }}
                         />
                     </Modal>
-                    )}
-                            <BackTop className="ant-back-top-inner" />
+                )}
+                <BackTop className="ant-back-top-inner" />
                 <div className="tableList">
                     <Form onSubmit={this.handleSubmit}>
                         <Row
@@ -276,12 +265,12 @@ export default class MemberList extends React.Component<Props, State> {
                         >
                             <Col xl={10} md={24} sm={24}>
                                 <FormItem
-                                    label="会员ID"
+                                    label="会员名"
                                     {...formItemLayout}
                                     className="form-inline-item"
                                 >
                                     {getFieldDecorator('name')(
-                                        <Input placeholder="会员ID" />
+                                        <Input placeholder="会员名" />
                                     )}
                                 </FormItem>
                             </Col>
@@ -291,10 +280,11 @@ export default class MemberList extends React.Component<Props, State> {
                                     {...formItemLayout}
                                     className="form-inline-item"
                                 >
-                                    {getFieldDecorator('atat')(
-                                          <Select defaultValue="lucy" style={{ width: 200 }} placeholder = "请选择会员类型">
-                                          <Option value={0}>普通会员</Option>
-                                          <Option value={1}>VIP会员</Option>
+                                    {getFieldDecorator('vip')(
+                                        <Select  style={{ width: 200 }} placeholder="请选择会员类型">
+                                            <Option value={0}>非会员</Option>
+                                            <Option value={1}>普通会员</Option>
+                                            <Option value={2}>VIP会员</Option>
                                         </Select>
                                     )}
                                 </FormItem>
@@ -326,27 +316,26 @@ export default class MemberList extends React.Component<Props, State> {
                         style={{ marginBottom: '10px' }}
                     >
                         <Button
-                        type="primary"
-                        htmlType="submit"
-                        className="listsearch"
-                        onClick={this.CreateMember}
+                            type="primary"
+                            htmlType="submit"
+                            className="listsearch"
+                            onClick={this.CreateMember}
                         >
-                        添加会员
+                            添加会员
                         </Button>
                     </Col>
                     <Col span={24}>
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                            dataSource={info.list}
+                            pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage: true
+                            }}
                             onChange={this.handleTableChange}
                         />
 

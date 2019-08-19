@@ -198,17 +198,17 @@ const menuData = [
       },
     ]
   },
-  {
-    name: "留言管理",
-    icon: "customer-service",
-    path: "/message",
-    children: [
-      {
-        name: '留言列表',
-        path: 'home',
-      },
-    ]
-  },
+  // {
+  //   name: "留言管理",
+  //   icon: "customer-service",
+  //   path: "/message",
+  //   children: [
+  //     {
+  //       name: '留言列表',
+  //       path: 'home',
+  //     },
+  //   ]
+  // },
 ];
 
 function formatter(data: any[], parentPath: string) {

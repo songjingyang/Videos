@@ -76,37 +76,39 @@ export default class AdvertisingList extends React.Component<Props, State> {
             columns: [
                 {
                     title: '缩略图',
-                    dataIndex: 'url',
-                    key: 'url',
-                    render:(recode:any,text:string)=>(
-                        <PreviewImg alt="img" src={text}/>
+                    dataIndex: 'cover_url',
+                    key: 'cover_url',
+                    render: (recode: any, text: string) => (
+                        <PreviewImg alt="img" src={text} />
                     )
                 },
                 {
                     title: '广告名称',
-                    dataIndex: 'type',
-                    key: 'type',
+                    dataIndex: 'title',
+                    key: 'title',
                 },
                 {
                     title: '广告位置',
-                    dataIndex: 'money1',
-                    key: 'money1',
-                },
-                {
-                    title: '截止日期',
-                    dataIndex: 'created_at',
-                    key: 'created_at',
-                    render: (text: string, record: any) => (
-                        <span>
-                            {dateFormater(text)}
-                        </span>
-                    )
+                    dataIndex: 'cate_id',
+                    key: 'cate_id',
                 },
 
                 {
-                    title: '注册时间',
-                    dataIndex: 'created_at',
-                    key: 'created_at',
+                    title: '状态',
+                    dataIndex: 'status',
+                    key: 'status',
+                    render: (text: string, record: any) => {
+                        let config: any = {
+                            0: <Badge status="error" text="停用" />,
+                            1: <Badge status="success" text="启用" />,
+                        };
+                        return config[record.status];
+                    },
+                },
+                {
+                    title: '开始时间',
+                    dataIndex: 'start_at',
+                    key: 'start_at',
                     render: (text: string, record: any) => (
                         <span>
                             {dateFormater(text)}
@@ -114,9 +116,14 @@ export default class AdvertisingList extends React.Component<Props, State> {
                     )
                 },
                 {
-                    title: '状态',
-                    dataIndex: 'email',
-                    key: 'email',
+                    title: '结束时间',
+                    dataIndex: 'end_at',
+                    key: 'end_at',
+                    render: (text: string, record: any) => (
+                        <span>
+                            {dateFormater(text)}
+                        </span>
+                    )
                 },
                 {
                     title: '操作',
@@ -124,17 +131,33 @@ export default class AdvertisingList extends React.Component<Props, State> {
                     key: 'play',
                     render: (text: string, record: any) => (
                         <span>
-                            <a href="#"   onClick={() => this.CreateAdvert(record)}>编辑</a>
+                            <a href="#" onClick={() => this.CreateAdvert(record)}>编辑</a>
                             <Divider type="vertical" />
                             <Popconfirm
                                 title="你确定删除吗？"
                                 icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
                                 okText="确认"
-
-
                                 cancelText="取消"
                                 onConfirm={this.DeleteRecord} >
                                 <a href="#">删除</a>
+                            </Popconfirm>
+                            <Divider type="vertical" />
+                            <Popconfirm
+                                title="你确定启用吗？"
+                                icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+                                okText="确认"
+                                cancelText="取消"
+                                onConfirm={this.DeleteRecord} >
+                                <a href="#">启用</a>
+                            </Popconfirm>
+                            <Divider type="vertical" />
+                            <Popconfirm
+                                title="你确定停用吗？"
+                                icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
+                                okText="确认"
+                                cancelText="取消"
+                                onConfirm={this.DeleteRecord} >
+                                <a href="#">停用</a>
                             </Popconfirm>
                         </span>
                     ),
@@ -226,20 +249,20 @@ export default class AdvertisingList extends React.Component<Props, State> {
     };
     isCreateAdvert = (bool: boolean) => {
         this.setState({
-          visible: bool,
+            visible: bool,
         });
-      };
-      CreateAdvert = (item: any) => {
+    };
+    CreateAdvert = (item: any) => {
         this.isCreateAdvert(true);
         this.setState({
-          currItem: item,
+            currItem: item,
         })
-      };
-      PropsInfo = (bool: boolean) => {
+    };
+    PropsInfo = (bool: boolean) => {
         this.isCreateAdvert(false);
-      };
+    };
     render() {
-        // const info = this.props.MessageMana.AdvertList;
+        const info = this.props.advert.advertPage;
         const { selectedRowKeys, selectedRows } = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -253,9 +276,9 @@ export default class AdvertisingList extends React.Component<Props, State> {
         };
         return (
             <Card title="广告列表" bordered={false}
-            // loading={this.state.loading}
+                loading={this.state.loading}
             >
-                 {this.state.visible && (
+                {this.state.visible && (
                     <Modal
                         visible={this.state.visible}
                         width={700}
@@ -263,20 +286,20 @@ export default class AdvertisingList extends React.Component<Props, State> {
                         footer={null}
                     >
                         <CreateAdvert
-                        form={this.props.form}
-                        advert={this.props.advert}
-                        data={this.state.currItem}
-                        onClose={() => {
-                            this.PropsInfo(false);
-                            this.getAdvertList({
-                            pageSize: this.state.pagination.pageSize,
-                            page: this.state.pagination.current,
-                            });
-                        }}
+                            form={this.props.form}
+                            advert={this.props.advert}
+                            data={this.state.currItem}
+                            onClose={() => {
+                                this.PropsInfo(false);
+                                this.getAdvertList({
+                                    pageSize: this.state.pagination.pageSize,
+                                    page: this.state.pagination.current,
+                                });
+                            }}
                         />
                     </Modal>
-                    )}
-                            <BackTop className="ant-back-top-inner" />
+                )}
+                <BackTop className="ant-back-top-inner" />
                 <div className="tableList">
                     <Form onSubmit={this.handleSubmit}>
                         <Row
@@ -321,16 +344,16 @@ export default class AdvertisingList extends React.Component<Props, State> {
                         style={{ marginBottom: '10px' }}
                     >
                         <Button
-                        type="primary"
-                        htmlType="submit"
-                        className="listsearch"
-                        onClick={this.CreateAdvert}
+                            type="primary"
+                            htmlType="submit"
+                            className="listsearch"
+                            onClick={this.CreateAdvert}
                         >
-                        添加广告
+                            添加广告
                         </Button>
                     </Col>
                     <Col span={24}>
-                    <div style={{ marginBottom: 16 }}>
+                        <div style={{ marginBottom: 16 }}>
                             <Button
                                 type="primary"
                                 // onClick={this.AllDelete}
@@ -346,19 +369,17 @@ export default class AdvertisingList extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                            dataSource={info.list}
+                            pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage: true
+                            }}
                             rowSelection={rowSelection}
                             onChange={this.handleTableChange}
                         />
-
                     </Col>
                 </div>
             </Card>

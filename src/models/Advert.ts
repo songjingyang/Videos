@@ -9,6 +9,22 @@ export interface AdvertPage {
 export interface DeleteInfo {
 
 }
+export interface DefaultAdvert {
+  cover_url: string
+  created_at: string
+  desc: any
+  duration: any
+  end_at: string
+  id: number
+  path: any
+  pos: number
+  start_at:string
+  status: number
+  title: string
+  type: number
+  updated_at: string
+  url: string
+}
 export interface CreateAdvert {
 
 }
@@ -41,7 +57,23 @@ export class Advert {
     createAdvert: CreateAdvert = {
       
     };
-
+    @observable
+    defaultAdvert: DefaultAdvert = {
+      cover_url: "",
+      created_at: "",
+      desc: null,
+      duration: null,
+      end_at: "",
+      id: 0,
+      path: null,
+      pos: 0,
+      start_at:"",
+      status: 0,
+      title: "",
+      type: 0,
+      updated_at: "",
+      url: "",
+    };
 
   @observable
   advertSpacePage: AdvertSpacePage = {
@@ -135,6 +167,18 @@ export class Advert {
     }
     if (callback) {
       callback(res);
+    }
+  }
+  @action
+  async getDefaultAdvert({ data, callback }: ReqData) {
+    const res = await request<DefaultAdvert>(urlMaps.getDefaultAdvert, data, {
+      method: 'GET',
+    });
+    if (res.code === 200) {
+      this.defaultAdvert = res.data
+    }
+    if (callback) {
+      callback(res.data);
     }
   }
 }

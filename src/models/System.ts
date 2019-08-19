@@ -4,12 +4,23 @@ import { string } from 'prop-types';
 export interface SystemPage {
     ts: string;
     total: number;
-    list: []
+    list: [
+      
+    ]
 }
 export interface NavPage {
     ts: string;
     total: number;
-    list: []
+    list: [
+        {
+            id: number ,
+            name : string,
+            sort : number ,
+            cateId :number ,
+            createdAt:string,
+            updatedAt : string
+         }
+    ]
 }
 export interface CategoryPage {
     ts: string;
@@ -78,7 +89,16 @@ export class System {
     navPage: NavPage = {
         ts: "",
         total: 0,
-        list: []
+        list: [
+            {
+                id: 0 ,
+                name : "",
+                sort : 0 ,
+                cateId :0 ,
+                createdAt:"",
+                updatedAt : ""
+             }
+        ]
     };
     @observable
     tagPage: TagPage = {
@@ -178,12 +198,12 @@ export class System {
         }
     }
     @action
-    async getHotWordPage({ data, callback }: ReqData) {
-        const res = await request<TagPage>(urlMaps.getHotWordPage, data, {
+    async getTagPage({ data, callback }: ReqData) {
+        const res = await request<TagPage>(urlMaps.getTagPage, data, {
             method: 'GET',
         });
         if (res.code === 200) {
-            this.hotWordPage = res.data;
+            this.tagPage = res.data;
 
         }
         if (callback) {
@@ -192,7 +212,7 @@ export class System {
     }
     @action
     async getMitoPage({ data, callback }: ReqData) {
-        const res = await request<MitoPage>(urlMaps.getMitoPage, data, {
+        const res = await request<MitoPage>(urlMaps.getMitoCategory, data, {
             method: 'GET',
         });
         if (res.code === 200) {
@@ -210,6 +230,20 @@ export class System {
         });
         if (res.code === 200) {
             this.navPage = res.data;
+
+        }
+        if (callback) {
+            callback(res);
+        }
+    }
+
+    @action
+    async getHotWordPage({ data, callback }: ReqData) {
+        const res = await request<HotWordPage>(urlMaps.getHotWordPage, data, {
+            method: 'GET',
+        });
+        if (res.code === 200) {
+            this.hotWordPage = res.data;
 
         }
         if (callback) {

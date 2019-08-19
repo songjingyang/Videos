@@ -74,25 +74,25 @@ export default class VisitStatistics extends React.Component<Props, State> {
                 total: 20,
             },
             columns: [
-                {
-                    title: '编号',
-                    dataIndex: 'type',
-                    key: 'type',
-                },
+                // {
+                //     title: '编号',
+                //     dataIndex: 'type',
+                //     key: 'type',
+                // },
                 {
                     title: 'IP地址',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    dataIndex: 'ip',
+                    key: 'ip',
                 },
                 {
                     title: '地区',
-                    dataIndex: 'phone',
-                    key: 'phone',
+                    dataIndex: 'addr',
+                    key: 'addr',
                 },
                 {
                     title: '来源',
-                    dataIndex: 'email',
-                    key: 'email',
+                    dataIndex: 'source',
+                    key: 'source',
                 },
                 {
                     title: '访问时间',
@@ -137,50 +137,50 @@ export default class VisitStatistics extends React.Component<Props, State> {
 
     getVisitPage = (params: any = {}) => {
         this.props.form.validateFields((err, values) => {
-          if (!err) {
-            let payload = {
-              ...values,
-            };
-            if (!params.page) {
-              params.page = 1;
-            }
-            if (params.page === 1) {
-              params.ts = new Date().valueOf();
-            } else {
-              params.ts = this.props.menu.visitPage.ts;
-            }
-            if (!params.pageSize) {
-              params.pageSize = 20;
-            }
-            if (payload.timeRange) {
-              if (payload.timeRange.length !== 0) {
-                payload.start_at = parseInt(payload.timeRange[0].valueOf());
-                payload.end_at = parseInt(payload.timeRange[1].valueOf());
-              } else {
-                payload.start_at = 0;
-                payload.end_at = 0;
-              }
-            }
-            payload = {
-              ...payload,
-              ...params,
-            };
-            this.props.menu.getVisitPage({
-              data: {
-                ...payload,
-              },
-
-              callback: res => {
-                if (res.code === 200) {
-                  this.setState({
-                    loading: false
-                  })
+            if (!err) {
+                let payload = {
+                    ...values,
+                };
+                if (!params.page) {
+                    params.page = 1;
                 }
-              },
-            });
-          } else {
-            console.log('saveBuyManagementInfo parameters error');
-          }
+                if (params.page === 1) {
+                    params.ts = new Date().valueOf();
+                } else {
+                    params.ts = this.props.menu.visitPage.ts;
+                }
+                if (!params.pageSize) {
+                    params.pageSize = 20;
+                }
+                if (payload.timeRange) {
+                    if (payload.timeRange.length !== 0) {
+                        payload.start_at = parseInt(payload.timeRange[0].valueOf());
+                        payload.end_at = parseInt(payload.timeRange[1].valueOf());
+                    } else {
+                        payload.start_at = 0;
+                        payload.end_at = 0;
+                    }
+                }
+                payload = {
+                    ...payload,
+                    ...params,
+                };
+                this.props.menu.getVisitPage({
+                    data: {
+                        ...payload,
+                    },
+
+                    callback: res => {
+                        if (res.code === 200) {
+                            this.setState({
+                                loading: false
+                            })
+                        }
+                    },
+                });
+            } else {
+                console.log('saveBuyManagementInfo parameters error');
+            }
         });
     };
     //分页
@@ -207,7 +207,7 @@ export default class VisitStatistics extends React.Component<Props, State> {
         });
     };
     render() {
-        // const info = this.props.MessageMana.MessagePage;
+        const info = this.props.menu.visitPage
         const { selectedRowKeys, selectedRows } = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -221,7 +221,7 @@ export default class VisitStatistics extends React.Component<Props, State> {
         };
         return (
             <Card title="访问统计" bordered={false}
-            // loading={this.state.loading}
+                loading={this.state.loading}
             >
                 <BackTop className="ant-back-top-inner" />
                 <div className="tableList">
@@ -261,7 +261,7 @@ export default class VisitStatistics extends React.Component<Props, State> {
                         </Row>
                     </Form>
                     <Col span={24}>
-                    <div style={{ marginBottom: 16 }}>
+                        <div style={{ marginBottom: 16 }}>
                             <Button
                                 type="primary"
                                 // onClick={this.AllDelete}
@@ -277,19 +277,18 @@ export default class VisitStatistics extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                            dataSource={info.list}
+                            pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage: true
+                            }}
                             rowSelection={rowSelection}
                             onChange={this.handleTableChange}
                         />
-                      
+
                     </Col>
                 </div>
             </Card>

@@ -71,14 +71,14 @@ export default class TagEditing extends React.Component<Props, State> {
             },
             columns: [
                 {
-                    title: '搜索词热度',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    title: '标签排序',
+                    dataIndex: 'sort',
+                    key: 'sort',
                 },
                 {
-                    title: '搜索词名称',
-                    dataIndex: 'type',
-                    key: 'type',
+                    title: '标签名称',
+                    dataIndex: 'name',
+                    key: 'name',
                 },
                 {
                     title: '操作',
@@ -140,7 +140,7 @@ export default class TagEditing extends React.Component<Props, State> {
                     ...payload,
                     ...params,
                 };
-                this.props.system.getHotWordPage({
+                this.props.system.getTagPage({
                     data: {
                         ...payload,
                     },
@@ -196,7 +196,7 @@ export default class TagEditing extends React.Component<Props, State> {
         this.isCreateTag(false);
       };
     render() {
-        // const info = this.props.MessageMana.TagList;
+        const info = this.props.system.tagPage;
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: { span: 6 },
@@ -249,15 +249,14 @@ export default class TagEditing extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                              dataSource={info.list}
+                              pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage:true
+                              }}
                             onChange={this.handleTableChange}
                         />
 

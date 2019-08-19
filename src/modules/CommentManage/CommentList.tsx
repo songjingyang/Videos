@@ -75,47 +75,28 @@ export default class CommentList extends React.Component<Props, State> {
             },
             columns: [
                 {
+                    title: '资源名称',
+                    dataIndex: 'source_name',
+                    key: 'source_name',
+                },
+                {
+                    title: '所属节目',
+                    dataIndex: 'column_name',
+                    key: 'column_name',
+                },
+                {
+                    title: '评论内容',
+                    dataIndex: 'content',
+                    key: 'content',
+                },
+                {
                     title: '用户名',
-                    dataIndex: 'type',
-                    key: 'type',
+                    dataIndex: 'username',
+                    key: 'username',
                 },
+                
                 {
-                    title: '推广链接',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
-                },
-                {
-                    title: '推广人数',
-                    dataIndex: 'phone',
-                    key: 'phone',
-                },
-                {
-                    title: '推广金额',
-                    dataIndex: 'money',
-                    key: 'money',
-                },
-                {
-                    title: '消费金额',
-                    dataIndex: 'money1',
-                    key: 'money1',
-                },
-                {
-                    title: '开通次数',
-                    dataIndex: 'money2',
-                    key: 'money2',
-                },
-                {
-                    title: '累计天数',
-                    dataIndex: 'money3',
-                    key: 'money3',
-                },
-                {
-                    title: '今日次数',
-                    dataIndex: 'email',
-                    key: 'email',
-                },
-                {
-                    title: '开始时间',
+                    title: '评论时间',
                     dataIndex: 'created_at',
                     key: 'created_at',
                     render: (text: string, record: any) => (
@@ -227,7 +208,7 @@ export default class CommentList extends React.Component<Props, State> {
         });
     };
     render() {
-        // const info = this.props.MessageMana.CommentList;
+        const info = this.props.comment.commentList
         const { selectedRowKeys, selectedRows } = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -241,7 +222,7 @@ export default class CommentList extends React.Component<Props, State> {
         };
         return (
             <Card title="评论列表" bordered={false}
-            // loading={this.state.loading}
+            loading={this.state.loading}
             >
                 <BackTop className="ant-back-top-inner" />
                 <div className="tableList">
@@ -297,15 +278,13 @@ export default class CommentList extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                              dataSource={info.list}
+                              pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                showQuickJumper: true,
+                                hideOnSinglePage:true
+                              }}
                             rowSelection={rowSelection}
                             onChange={this.handleTableChange}
                         />

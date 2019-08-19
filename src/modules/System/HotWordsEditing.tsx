@@ -70,14 +70,14 @@ export default class HotWordsEditing extends React.Component<Props, State> {
             },
             columns: [
                 {
-                    title: '标签排序',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    title: '搜索词热度',
+                    dataIndex: 'heat',
+                    key: 'heat',
                 },
                 {
-                    title: '标签名称',
-                    dataIndex: 'type',
-                    key: 'type',
+                    title: '搜索词名称',
+                    dataIndex: 'name',
+                    key: 'name',
                 },
                 {
                     title: '操作',
@@ -121,7 +121,7 @@ export default class HotWordsEditing extends React.Component<Props, State> {
                 if (params.page === 1) {
                     params.ts = new Date().valueOf();
                 } else {
-                    params.ts = this.props.system.tagPage.ts;
+                    params.ts = this.props.system.hotWordPage.ts;
                 }
                 if (!params.pageSize) {
                     params.pageSize = 20;
@@ -195,7 +195,7 @@ export default class HotWordsEditing extends React.Component<Props, State> {
         this.isCreateHotWord(false);
       };
     render() {
-        // const info = this.props.MessageMana.HotWordList;
+        const info = this.props.system.hotWordPage;
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: { span: 6 },
@@ -248,15 +248,13 @@ export default class HotWordsEditing extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                              dataSource={info.list}
+                              pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                showQuickJumper: true,
+                                hideOnSinglePage:true
+                              }}
                             onChange={this.handleTableChange}
                         />
 

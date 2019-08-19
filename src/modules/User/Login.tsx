@@ -38,7 +38,7 @@ export default class Login extends React.Component<Props, State> {
     }, 0) : null
   };
   handleSubmit = (e: KeyboardEvent) => {
-    localStorage.setItem('user_cloud', JSON.stringify({"id":1,"name":"daycool","nickname":"天凉","phone":"13812345678","email":"1","avatar":"1","status":1,"updated_at":"1554808069003","created_at":"1554808069003","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxfSwiaWF0IjoxNTY0NTQyOTkxfQ.nBMT0TEMUhtQbturGaSv6BpeeysDKlm1JSC5cn-Ic8w"}));
+    // localStorage.setItem('user_cloud', JSON.stringify({"id":1,"name":"daycool","nickname":"天凉","phone":"13812345678","email":"1","avatar":"1","status":1,"updated_at":"1554808069003","created_at":"1554808069003","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7ImlkIjoxfSwiaWF0IjoxNTY0NTQyOTkxfQ.nBMT0TEMUhtQbturGaSv6BpeeysDKlm1JSC5cn-Ic8w"}));
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {

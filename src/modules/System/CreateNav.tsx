@@ -60,11 +60,16 @@ export default class CreateNav extends React.Component<Props, State> {
     };
   }
   componentDidMount() {
-    // this.props.data.id && this.props.advert.getDefaultAdvert({
+    // this.props.data.id && this.props.system.getNavPage({
     //   data: {
     //     id: this.props.data.id
     //   }
     // })
+    this.props.system.getCategoryPage({
+      data :{
+
+      }
+    })
   }
   handleSubmit = (e: KeyboardEvent) => {
     e.preventDefault();
@@ -93,7 +98,9 @@ export default class CreateNav extends React.Component<Props, State> {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
-    // const info = this.props.advert.defaultAdvert
+    const info = this.props.system.navPage
+    const defaultNav = this.props.data
+    const CatePage = this.props.system.categoryPage
     let baseUrl = window.location.protocol + '//' + document.domain + ":" + window.location.port + '/api'
     return (
       <Card bordered={false} title={this.props.data.id ? '编辑导航' : '添加导航'}>
@@ -105,7 +112,8 @@ export default class CreateNav extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('name', {
+                  initialValue : defaultNav.name,
                   rules: [
                     {
                       required: true,
@@ -122,22 +130,28 @@ export default class CreateNav extends React.Component<Props, State> {
             </Col>
             <Col xl={24} md={24} sm={24}>
               <FormItem
-                label="导航链接"
+                label="分类ID"
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('cate_id', {
+                  initialValue : defaultNav.cateId,
                   rules: [
                     {
                       required: true,
                       // whitespace: true,
-                      message: '请输入导航链接',
+                      message: '请选择分类ID',
                     },
                   ],
                 })(
-                  <Input
-                    placeholder="请输入导航链接"
-                  />
+                  <Select  style={{ width: 120 }} placeholder="请选择分类ID" >
+                    {
+                      CatePage.list.map((item:any,index:number)=>(
+                         <Option key={item.id} value={item.id}>{item.name}</Option> 
+                      ))
+                    }
+                 
+                </Select>
                 )}
               </FormItem>
             </Col>
@@ -147,7 +161,8 @@ export default class CreateNav extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('sort', {
+                  initialValue :defaultNav.sort,
                   rules: [
                     {
                       required: true,
@@ -156,30 +171,9 @@ export default class CreateNav extends React.Component<Props, State> {
                     },
                   ],
                 })(
-                  <Input
-                    placeholder="请输入导航排序"
+                  <InputNumber
+                    placeholder="导航排序"
                   />
-                )}
-              </FormItem>
-            </Col>
-            <Col xl={24} md={24} sm={24}>
-              <FormItem
-                label="导航设置"
-                {...formItemLayout}
-                className="form-inline-item"
-              >
-                {getFieldDecorator('url', {
-                  rules: [
-                    {
-                      required: true,
-                      // whitespace: true,
-                    },
-                  ],
-                })(
-                    <RadioGroup>
-                         <Radio value={1}>普通导航</Radio>
-                         <Radio value={2}>VIP导航</Radio>
-                    </RadioGroup>
                 )}
               </FormItem>
             </Col>

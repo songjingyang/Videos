@@ -72,13 +72,13 @@ export default class Mito extends React.Component<Props, State> {
             columns: [
                 {
                     title: '分类编号',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    dataIndex: 'id',
+                    key: 'id',
                 },
                 {
                     title: '分类名称',
-                    dataIndex: 'type',
-                    key: 'type',
+                    dataIndex: 'name',
+                    key: 'name',
                 },
                 {
                     title: '操作',
@@ -196,7 +196,7 @@ export default class Mito extends React.Component<Props, State> {
         this.isCreateMito(false);
       };
     render() {
-        // const info = this.props.MessageMana.MitoList;
+        const info = this.props.system.mitoPage;
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: { span: 6 },
@@ -204,7 +204,7 @@ export default class Mito extends React.Component<Props, State> {
         };
         return (
             <Card title="分类列表" bordered={false}
-            // loading={this.state.loading}
+            loading={this.state.loading}
             >
                  {this.state.visible && (
                     <Modal
@@ -249,15 +249,14 @@ export default class Mito extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                              dataSource={info.list}
+                              pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage:true
+                              }}
                             onChange={this.handleTableChange}
                         />
 

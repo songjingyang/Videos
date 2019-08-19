@@ -78,16 +78,23 @@ export default class MessageList extends React.Component<Props, State> {
                     title: '问题类型',
                     dataIndex: 'type',
                     key: 'type',
+                    render:(record:any,text:number)=>(
+                        <span>
+                            {
+                                text===1?"举报":"举报"
+                            }
+                        </span>
+                    )
                 },
                 {
                     title: '订单号',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    dataIndex: 'title',
+                    key: 'title',
                 },
                 {
                     title: '留言内容',
-                    dataIndex: 'phone',
-                    key: 'phone',
+                    dataIndex: 'content',
+                    key: 'content',
                 },
                 {
                     title: '邮箱',
@@ -207,7 +214,7 @@ export default class MessageList extends React.Component<Props, State> {
         });
     };
     render() {
-        // const info = this.props.MessageMana.MessagePage;
+        const info = this.props.message.messagePage;
         const { selectedRowKeys, selectedRows } = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -221,7 +228,7 @@ export default class MessageList extends React.Component<Props, State> {
         };
         return (
             <Card title="留言列表" bordered={false}
-            // loading={this.state.loading}
+            loading={this.state.loading}
             >
                 <BackTop className="ant-back-top-inner" />
                 <div className="tableList">
@@ -277,15 +284,14 @@ export default class MessageList extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                              dataSource={info.list}
+                              pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage:true
+                              }}
                             rowSelection={rowSelection}
                             onChange={this.handleTableChange}
                         />

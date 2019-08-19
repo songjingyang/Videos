@@ -105,7 +105,8 @@ export default class CreateAdvertSpace extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('name', {
+                  initialValue: this.props.data.name,
                   rules: [
                     {
                       required: true,

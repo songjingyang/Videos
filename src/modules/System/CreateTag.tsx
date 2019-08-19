@@ -94,6 +94,7 @@ export default class CreateTag extends React.Component<Props, State> {
       wrapperCol: { span: 14 },
     };
     // const info = this.props.advert.defaultAdvert
+    const defaultTag = this.props.data
     let baseUrl = window.location.protocol + '//' + document.domain + ":" + window.location.port + '/api'
     return (
       <Card bordered={false} title={this.props.data.id ? '编辑标签' : '添加标签'}>
@@ -105,7 +106,8 @@ export default class CreateTag extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('name', {
+                  initialValue: defaultTag.name,
                   rules: [
                     {
                       required: true,
@@ -126,7 +128,8 @@ export default class CreateTag extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('sort', {
+                  initialValue: defaultTag.sort,
                   rules: [
                     {
                       required: true,

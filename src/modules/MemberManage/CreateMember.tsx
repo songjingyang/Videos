@@ -93,6 +93,7 @@ export default class CreateMember extends React.Component<Props, State> {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
+    const defaultMember = this.props.data
     // const info = this.props.advert.defaultAdvert
     let baseUrl = window.location.protocol + '//' + document.domain + ":" + window.location.port + '/api'
     return (
@@ -105,7 +106,8 @@ export default class CreateMember extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('name', {
+                  initialValue : defaultMember.name,
                   rules: [
                     {
                       required: true,
@@ -126,7 +128,7 @@ export default class CreateMember extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('pass', {
                   rules: [
                     {
                       required: true,
@@ -147,7 +149,8 @@ export default class CreateMember extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('nickname', {
+                  initialValue : defaultMember.nickname,
                   rules: [
                     {
                       required: true,
@@ -162,7 +165,7 @@ export default class CreateMember extends React.Component<Props, State> {
                 )}
               </FormItem>
             </Col>
-            <Col xl={24} md={24} sm={24}>
+            {/* <Col xl={24} md={24} sm={24}>
               <FormItem
                 label="会员类型"
                 {...formItemLayout}
@@ -209,7 +212,7 @@ export default class CreateMember extends React.Component<Props, State> {
                     />
                 )}
               </FormItem>
-            </Col>
+            </Col> */}
             <Col xl={12} md={24} sm={24} offset={6}>
               <div className="submitButtons">
                 <Button

@@ -42,8 +42,8 @@ export class Mito {
   }
   @action
   async DeleteMito({ data, callback }: ReqData) {
-    const res = await request<DeleteInfo>(urlMaps.DeleteMito, data, {
-      method: 'POST',
+    const res = await request<DeleteInfo>(urlMaps.DeleteMito+"/"+data.id, data, {
+      method: 'DELETE',
     });
     if (res.code === 200) {
       this.deleteInfo = res.data;

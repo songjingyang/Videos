@@ -75,43 +75,28 @@ export default class ExtensionPage extends React.Component<Props, State> {
             columns: [
                 {
                     title: '用户名',
-                    dataIndex: 'type',
-                    key: 'type',
+                    dataIndex: 'username',
+                    key: 'username',
                 },
                 {
                     title: '推广链接',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    dataIndex: 'url',
+                    key: 'url',
                 },
                 {
                     title: '推广人数',
-                    dataIndex: 'phone',
-                    key: 'phone',
-                },
-                {
-                    title: '推广金额',
-                    dataIndex: 'email',
-                    key: 'email',
-                },
-                {
-                    title: '消费金额',
-                    dataIndex: 'email',
-                    key: 'email',
-                },
-                {
-                    title: '开通次数',
-                    dataIndex: 'email',
-                    key: 'email',
+                    dataIndex: 'count',
+                    key: 'count',
                 },
                 {
                     title: '累计天数',
-                    dataIndex: 'email',
-                    key: 'email',
+                    dataIndex: 'totalTime',
+                    key: 'totalTime',
                 },
                 {
                     title: '今日次数',
-                    dataIndex: 'email',
-                    key: 'email',
+                    dataIndex: 'countToday',
+                    key: 'countToday',
                 },
                 {
                     title: '开通时间',
@@ -226,7 +211,7 @@ export default class ExtensionPage extends React.Component<Props, State> {
         });
     };
     render() {
-        // const info = this.props.ExtensionMana.ExtensionPage;
+        const info = this.props.extension.extensionPage;
         const { selectedRowKeys, selectedRows } = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -296,15 +281,14 @@ export default class ExtensionPage extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                              dataSource={info.list}
+                              pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage:true
+                              }}
                             rowSelection={rowSelection}
                             onChange={this.handleTableChange}
                         />

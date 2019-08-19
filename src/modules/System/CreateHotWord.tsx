@@ -51,7 +51,7 @@ interface State {
 }
 @inject('system')
 @observer
-export default class CreateHotTag extends React.Component<Props, State> {
+export default class CreateHotWord extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -94,6 +94,7 @@ export default class CreateHotTag extends React.Component<Props, State> {
       wrapperCol: { span: 14 },
     };
     // const info = this.props.advert.defaultAdvert
+    const defaultHot = this.props.data
     let baseUrl = window.location.protocol + '//' + document.domain + ":" + window.location.port + '/api'
     return (
       <Card bordered={false} title={this.props.data.id ? '编辑搜索词' : '添加搜索词'}>
@@ -105,7 +106,8 @@ export default class CreateHotTag extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('heat', {
+                  initialValue :defaultHot.heat,
                   rules: [
                     {
                       required: true,
@@ -126,7 +128,8 @@ export default class CreateHotTag extends React.Component<Props, State> {
                 {...formItemLayout}
                 className="form-inline-item"
               >
-                {getFieldDecorator('url', {
+                {getFieldDecorator('name', {
+                  initialValue:defaultHot.name,
                   rules: [
                     {
                       required: true,

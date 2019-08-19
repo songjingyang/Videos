@@ -106,19 +106,22 @@ export default class CreateMito extends React.Component<Props, State> {
       name: 'file',
       multiple: true,
       action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-      onChange(info:any) {
+      onChange:(info:any) =>{
         const { status } = info.file;
         if (status !== 'uploading') {
-          console.log(info.file, info.fileList);
+          console.log(111111111111111,info.file, info.fileList);
         }
         if (status === 'done') {
+          this.setState({
+            // fileList : info.fileList.length>1?info.fileList:""
+          })
           message.success(`${info.file.name} file uploaded successfully.`);
+          
         } else if (status === 'error') {
           message.error(`${info.file.name} file upload failed.`);
         }
       },
     };
-    
     // const info = this.props.advert.defaultAdvert
     let baseUrl = window.location.protocol + '//' + document.domain + ":" + window.location.port + '/api'
     return (

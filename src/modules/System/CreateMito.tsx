@@ -70,7 +70,7 @@ export default class CreateMito extends React.Component<Props, State> {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        this.props.system.CreateNav({
+        this.props.system.CreateMito({
           data: {
             ...values,
           },
@@ -93,36 +93,6 @@ export default class CreateMito extends React.Component<Props, State> {
       labelCol: { span: 6 },
       wrapperCol: { span: 14 },
     };
-    const list = [
-        // {
-        //   id: 1,
-        //   name: '首页浮窗',
-        // },
-        {
-          id: 2,
-          name: '首页嵌入(375*252)',
-        },
-        {
-          id: 3,
-          name: '首页底部(375*58)',
-        },
-        {
-          id: 4,
-          name: '播放页浮窗(146*95)',
-        },
-        {
-          id: 5,
-          name: '播放页嵌入(375*58)',
-        },
-        // {
-        //   id: 6,
-        //   name: '播放中插入视频',
-        // },
-        {
-          id: 8,
-          name: '开屏广告(375*667)',
-        },
-      ]
     // const info = this.props.advert.defaultAdvert
     let baseUrl = window.location.protocol + '//' + document.domain + ":" + window.location.port + '/api'
     return (
@@ -136,6 +106,7 @@ export default class CreateMito extends React.Component<Props, State> {
                 className="form-inline-item"
               >
                 {getFieldDecorator('url', {
+                  initialValue:this.props.data.name,
                   rules: [
                     {
                       required: true,

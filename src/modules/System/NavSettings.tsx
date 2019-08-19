@@ -52,7 +52,8 @@ interface State {
     visible: boolean;
     currItem: any;
     pagination: any;
-    loading: boolean
+    loading: boolean;
+    navType: any
 }
 @Form.create()
 @inject('system')
@@ -63,6 +64,10 @@ export default class NavSetting extends React.Component<Props, State> {
         this.state = {
             visible: false,
             loading: true,
+            navType: {
+                "0": "普通",
+                "1": "会员",
+            },
             currItem: {},
             pagination: {
                 pageSize: 20,
@@ -72,18 +77,23 @@ export default class NavSetting extends React.Component<Props, State> {
             columns: [
                 {
                     title: '排序',
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    dataIndex: 'sort',
+                    key: 'sort',
                 },
                 {
                     title: '归属',
-                    dataIndex: 'type',
-                    key: 'type',
+                    dataIndex: 'cateId',
+                    key: 'cateId',
+                    render: (text: number, record: any) => (
+                        <span>
+                            {this.state.navType[record.cateId]}
+                        </span>
+                    )
                 },
                 {
                     title: '导航名称',
-                    dataIndex: 'money1',
-                    key: 'money1',
+                    dataIndex: 'name',
+                    key: 'name',
                 },
                 {
                     title: '操作',
@@ -91,14 +101,12 @@ export default class NavSetting extends React.Component<Props, State> {
                     key: 'play',
                     render: (text: string, record: any) => (
                         <span>
-                            <a href="#"   onClick={() => this.CreateNav(record)}>编辑</a>
+                            <a href="#" onClick={() => this.CreateNav(record)}>编辑</a>
                             <Divider type="vertical" />
                             <Popconfirm
                                 title="你确定删除吗？"
                                 icon={<Icon type="question-circle-o" style={{ color: 'red' }} />}
                                 okText="确认"
-
-
                                 cancelText="取消"
                                 onConfirm={this.DeleteRecord} >
                                 <a href="#">删除</a>
@@ -188,20 +196,20 @@ export default class NavSetting extends React.Component<Props, State> {
     };
     isCreateNav = (bool: boolean) => {
         this.setState({
-          visible: bool,
+            visible: bool,
         });
-      };
-      CreateNav = (item: any) => {
+    };
+    CreateNav = (item: any) => {
         this.isCreateNav(true);
         this.setState({
-          currItem: item,
+            currItem: item,
         })
-      };
-      PropsInfo = (bool: boolean) => {
+    };
+    PropsInfo = (bool: boolean) => {
         this.isCreateNav(false);
-      };
+    };
     render() {
-        // const info = this.props.MessageMana.NavList;
+        const info = this.props.system.navPage
         const { getFieldDecorator } = this.props.form;
         const formItemLayout = {
             labelCol: { span: 6 },
@@ -211,7 +219,7 @@ export default class NavSetting extends React.Component<Props, State> {
             <Card title="导航列表" bordered={false}
             // loading={this.state.loading}
             >
-                 {this.state.visible && (
+                {this.state.visible && (
                     <Modal
                         visible={this.state.visible}
                         width={700}
@@ -219,20 +227,20 @@ export default class NavSetting extends React.Component<Props, State> {
                         footer={null}
                     >
                         <CreateNav
-                        form={this.props.form}
-                        system={this.props.system}
-                        data={this.state.currItem}
-                        onClose={() => {
-                            this.PropsInfo(false);
-                            this.getNavList({
-                            pageSize: this.state.pagination.pageSize,
-                            page: this.state.pagination.current,
-                            });
-                        }}
+                            form={this.props.form}
+                            system={this.props.system}
+                            data={this.state.currItem}
+                            onClose={() => {
+                                this.PropsInfo(false);
+                                this.getNavList({
+                                    pageSize: this.state.pagination.pageSize,
+                                    page: this.state.pagination.current,
+                                });
+                            }}
                         />
                     </Modal>
-                    )}
-                    <BackTop className="ant-back-top-inner" />
+                )}
+                <BackTop className="ant-back-top-inner" />
                 <div className="tableList">
                     <Col
                         xl={12}
@@ -242,27 +250,26 @@ export default class NavSetting extends React.Component<Props, State> {
                         style={{ marginBottom: '10px' }}
                     >
                         <Button
-                        type="primary"
-                        htmlType="submit"
-                        className="listsearch"
-                        onClick={this.CreateNav}
+                            type="primary"
+                            htmlType="submit"
+                            className="listsearch"
+                            onClick={this.CreateNav}
                         >
-                        添加导航
+                            添加导航
                         </Button>
                     </Col>
                     <Col span={24}>
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSinglePage:true
-                            //   }}
+                            dataSource={info.list}
+                            pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSinglePage: true
+                            }}
                             onChange={this.handleTableChange}
                         />
 

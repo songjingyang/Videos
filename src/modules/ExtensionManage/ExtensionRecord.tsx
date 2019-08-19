@@ -75,28 +75,24 @@ export default class ExtensionRecord extends React.Component<Props, State> {
             columns: [
                 {
                     title: '推广ID',
-                    dataIndex: 'type',
-                    key: 'type',
+                    dataIndex: 'spreadId',
+                    key: 'spreadId',
                 },
                 {
                     title: "注册用户",
-                    dataIndex: 'nickname',
-                    key: 'nickname',
+                    dataIndex: 'username',
+                    key: 'username',
                 },
                 {
                     title: 'IP地址',
-                    dataIndex: 'phone',
-                    key: 'phone',
+                    dataIndex: 'ip',
+                    key: 'ip',
                 },
                 {
                     title: '访问终端',
-                    dataIndex: 'email',
-                    key: 'email',
-                },
-                {
-                    title: '获得金额',
-                    dataIndex: 'email',
-                    key: 'email',
+                    dataIndex: 'ua',
+                    key: 'ua',
+                    width :300
                 },
                 {
                     title: '记录时间',
@@ -211,7 +207,7 @@ export default class ExtensionRecord extends React.Component<Props, State> {
         });
     };
     render() {
-        // const info = this.props.ExtensionMana.ExtensionRecord;
+        const info = this.props.extension.extensionRecord;
         const { selectedRowKeys, selectedRows } = this.state;
         const rowSelection = {
             selectedRowKeys,
@@ -225,7 +221,7 @@ export default class ExtensionRecord extends React.Component<Props, State> {
         };
         return (
             <Card title="推广记录" bordered={false}
-            // loading={this.state.loading}
+            loading={this.state.loading}
             >
                 <BackTop className="ant-back-top-inner" />
                 <div className="tableList">
@@ -281,15 +277,14 @@ export default class ExtensionRecord extends React.Component<Props, State> {
                         <Table
                             columns={this.state.columns}
                             rowKey="id"
-                            //   dataSource={info.list}
-                            dataSource={[{ type: 1, nickname: 1, phone: 1, email: 1, created_at: 11111111111 }]}
-                            //   pagination={{
-                            //     ...this.state.pagination,
-                            //     total: info.total,
-                            //     current: info.page,
-                            //     showQuickJumper: true,
-                            //     hideOnSingleRecord:true
-                            //   }}
+                              dataSource={info.list}
+                              pagination={{
+                                ...this.state.pagination,
+                                total: info.total,
+                                // current: info.page,
+                                showQuickJumper: true,
+                                hideOnSingleRecord:true
+                              }}
                             rowSelection={rowSelection}
                             onChange={this.handleTableChange}
                         />

@@ -2,8 +2,8 @@ const proxy = require('http-proxy-middleware')
 
 module.exports = function (app) {
   // // console.log('​app', app)
-  const proxyUrl = 'http://192.168.1.139:7008'
-  const uploadProxyUrl = 'http://192.168.1.139:7008'
+  const proxyUrl = 'http://192.168.1.118:3000/mock/78/'
+  const uploadProxyUrl = 'http://192.168.1.118:3000/mock/78/'
   // app.use(
   //   proxy('/api/upload', {
   //     target: uploadProxyUrl,

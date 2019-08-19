@@ -49,7 +49,7 @@ export class User {
              const data: any = res.data;
              const user_cloud = data as UserInfo;
              this.userInfo = user_cloud;
-            //  localStorage.setItem('user_cloud', JSON.stringify(user_cloud));
+             localStorage.setItem('user_cloud', JSON.stringify(user_cloud));
            }
            if (callback) {
              callback(res);
